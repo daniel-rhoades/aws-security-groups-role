@@ -1,4 +1,4 @@
-[![Circle CI](https://circleci.com/gh/daniel-rhoades/aws-security-groups.svg?style=svg&circle-token=9e73196b1138c36a3ec90938a2ebae505408ecc1)](https://circleci.com/gh/daniel-rhoades/aws-security-groups)
+[![Circle CI](https://circleci.com/gh/daniel-rhoades/aws-security-groups-role.svg?style=svg&circle-token=9e73196b1138c36a3ec90938a2ebae505408ecc1)](https://circleci.com/gh/daniel-rhoades/aws-security-groups-role)
 
 aws-security-group-role
 =======================
