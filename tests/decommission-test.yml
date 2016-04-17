@@ -52,15 +52,10 @@
            cidr_ip: "{{ my_vpc_cidr }}"
 
     # Internal inbound security groups, e.g. services which should not be directly accessed outside the VPC, such as
-    # the web servers behind the load balancer
-    my_internal_inbound_security_groups:
-      - sg_name: inbound-web-internal
-        sg_description: allow http and https access (from load balancer only)
-        sg_rules:
-          - proto: tcp
-            from_port: 80
-            to_port: 80
-            group_id: "{{ ec2_group_inbound_sg.results[0].group_id }}"
+    # the web servers behind the load balancer.
+    #
+    # This has to be a file as it needs to be dynamically included after the inbound security groups have been created
+    my_internal_inbound_security_groups_file: "internal-securitygroups.yml"
 
     # Outbound rules, e.g. what services can the web servers access by themselves
     my_outbound_security_groups:

@@ -29,7 +29,7 @@ Required variables:
 * vpc_region: You must specify the region in which you created the VPC, e.g. eu-west-1;
 * vpc_id: You must specify the VPC ID that you wish to create the security groups within, e.g. vpc-xxxxxxxx;
 * ec2_group_inbound_sg: You must specify a list of inbound security groups to create, see example playbook section below for further information;
-* ec2_group_internal_inbound_sg: You must specify a list of internal inbound security groups to create, see example playbook section below for further information;
+* ec2_group_internal_inbound_sg_file: You must specify a list of internal inbound security groups to create, see example playbook section below for further information.  Note, this must be a file as it will be dynamically included after the inbound groups have been created;
 * ec2_group_outbound_sg: You must specify a list of outbound security groups to create, see example playbook section below for further information.
 
 Inbound security groups are expected to be those which you would apply to public facing services, e.g. a load balancer.  The internal inbound security groups are expected to be allocated to instanced behind a load balancer or internal to the VPC.  Outbound security groups are the ports which services can call upon from inside the network.
@@ -114,15 +114,10 @@ The example playbook below ensures an EC2 Security Group is provisioned in AWS a
            cidr_ip: "{{ my_vpc_cidr }}"
 
     # Internal inbound security groups, e.g. services which should not be directly accessed outside the VPC, such as
-    # the web servers behind the load balancer
-    my_internal_inbound_security_groups:
-      - sg_name: inbound-web-internal
-        sg_description: allow http and https access (from load balancer only)
-        sg_rules:
-          - proto: tcp
-            from_port: 80
-            to_port: 80
-            group_id: "{{ ec2_group_inbound_sg.results[0].group_id }}"
+    # the web servers behind the load balancer.
+    #
+    # This has to be a file as it needs to be dynamically included after the inbound security groups have been created
+    my_internal_inbound_security_groups_file: "internal-securitygroups.yml"
 
     # Outbound rules, e.g. what services can the web servers access by themselves
     my_outbound_security_groups:
@@ -148,9 +143,22 @@ The example playbook below ensures an EC2 Security Group is provisioned in AWS a
         vpc_region: "{{ my_vpc_region }}",
         vpc_id: "{{ vpc.vpc_id }}",
         ec2_group_inbound_sg: "{{ my_inbound_security_groups }}",
-        ec2_group_internal_inbound_sg: "{{ my_internal_inbound_security_groups }}",
+        ec2_group_internal_inbound_sg_file: "{{ my_internal_inbound_security_groups_file }}",
         ec2_group_outbound_sg: "{{ my_outbound_security_groups }}"
       }
+```
+
+The example `internal-securitygroups.yml` looks like:
+
+```
+ec2_group_internal_inbound_sg:
+  - sg_name: inbound-web-internal
+    sg_description: allow http and https access (from load balancer only)
+    sg_rules:
+      - proto: tcp
+        from_port: 80
+        to_port: 80
+        group_id: "{{ ec2_group_inbound_sg.results[0].group_id }}"
 ```
 
 To decommission the groups:
@@ -209,15 +217,10 @@ To decommission the groups:
            cidr_ip: "{{ my_vpc_cidr }}"
 
     # Internal inbound security groups, e.g. services which should not be directly accessed outside the VPC, such as
-    # the web servers behind the load balancer
-    my_internal_inbound_security_groups:
-      - sg_name: inbound-web-internal
-        sg_description: allow http and https access (from load balancer only)
-        sg_rules:
-          - proto: tcp
-            from_port: 80
-            to_port: 80
-            group_id: "{{ ec2_group_inbound_sg.results[0].group_id }}"
+    # the web servers behind the load balancer.
+    #
+    # This has to be a file as it needs to be dynamically included after the inbound security groups have been created
+    my_internal_inbound_security_groups_file: "internal-securitygroups.yml"
 
     # Outbound rules, e.g. what services can the web servers access by themselves
     my_outbound_security_groups:
@@ -243,7 +246,7 @@ To decommission the groups:
         vpc_region: "{{ my_vpc_region }}",
         vpc_id: "{{ vpc.vpc_id }}",
         ec2_group_inbound_sg: "{{ my_inbound_security_groups }}",
-        ec2_group_internal_inbound_sg: "{{ my_internal_inbound_security_groups }}",
+        ec2_group_internal_inbound_sg_file: "{{ my_internal_inbound_security_groups_file }}",
         ec2_group_outbound_sg: "{{ my_outbound_security_groups }}",
 
         ec2_inbound_group_state: "absent",
