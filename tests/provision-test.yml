@@ -72,7 +72,7 @@
   roles:
     # Provision networking
     - {
-        role: daniel-rhoades.aws-vpc-role,
+        role: daniel-rhoades.aws-vpc,
         vpc_name: "{{ my_vpc_name }}",
         vpc_region: "{{ my_vpc_region }}",
         vpc_cidr_block: "{{ my_vpc_cidr }}",

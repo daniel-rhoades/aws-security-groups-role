@@ -1,4 +1,4 @@
-[![Circle CI](https://circleci.com/gh/daniel-rhoades/aws-security-groups-role.svg?style=svg&circle-token=9e73196b1138c36a3ec90938a2ebae505408ecc1)](https://circleci.com/gh/daniel-rhoades/aws-security-groups-role)
+[![Circle CI](https://circleci.com/gh/daniel-rhoades/aws-security-groups.svg?style=svg&circle-token=9e73196b1138c36a3ec90938a2ebae505408ecc1)](https://circleci.com/gh/daniel-rhoades/aws-security-groups)
 
 aws-security-group-role
 =======================
@@ -58,7 +58,7 @@ Example Playbook
 
 Before using this role you will need to install the role, the simplist way to do this is: `ansible-galaxy install daniel-rhoades.aws-security-group-role`.
 
-The example playbook below ensures an EC2 Security Group is provisioned in AWS as specified, e.g. if one already matches the role does nothing, otherwise it gets created.  For completeness the examples also create a VPC into which the EC2 Security Groups would reside using the role:  `daniel-rhoades.aws-vpc-role`.
+The example playbook below ensures an EC2 Security Group is provisioned in AWS as specified, e.g. if one already matches the role does nothing, otherwise it gets created.  For completeness the examples also create a VPC into which the EC2 Security Groups would reside using the role:  `daniel-rhoades.aws-vpc`.
 
 ```
 - name: My System | Provision all required infrastructure
@@ -134,7 +134,7 @@ The example playbook below ensures an EC2 Security Group is provisioned in AWS a
   roles:
     # Provision networking
     - {
-        role: daniel-rhoades.aws-vpc-role,
+        role: daniel-rhoades.aws-vpc,
         vpc_name: "{{ my_vpc_name }}",
         vpc_region: "{{ my_vpc_region }}",
         vpc_cidr_block: "{{ my_vpc_cidr }}",
@@ -144,7 +144,7 @@ The example playbook below ensures an EC2 Security Group is provisioned in AWS a
 
     # Provision security groups
     - {
-        role: daniel-rhoades.aws-security-groups-role,
+        role: daniel-rhoades.aws-security-groups,
         vpc_region: "{{ my_vpc_region }}",
         vpc_id: "{{ vpc.vpc_id }}",
         ec2_group_inbound_sg: "{{ my_inbound_security_groups }}",
@@ -229,7 +229,7 @@ To decommission the groups:
   roles:
     # Provision networking
     - {
-        role: daniel-rhoades.aws-vpc-role,
+        role: daniel-rhoades.aws-vpc,
         vpc_name: "{{ my_vpc_name }}",
         vpc_region: "{{ my_vpc_region }}",
         vpc_cidr_block: "{{ my_vpc_cidr }}",
@@ -239,7 +239,7 @@ To decommission the groups:
 
     # Decommission security groups
     - {
-        role: daniel-rhoades.aws-security-groups-role,
+        role: daniel-rhoades.aws-security-groups,
         vpc_region: "{{ my_vpc_region }}",
         vpc_id: "{{ vpc.vpc_id }}",
         ec2_group_inbound_sg: "{{ my_inbound_security_groups }}",
