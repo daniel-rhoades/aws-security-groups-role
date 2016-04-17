@@ -86,6 +86,6 @@
         vpc_region: "{{ my_vpc_region }}",
         vpc_id: "{{ vpc.vpc_id }}",
         ec2_group_inbound_sg: "{{ my_inbound_security_groups }}",
-        ec2_group_internal_inbound_sg: "{{ my_internal_inbound_security_groups }}",
+        ec2_group_internal_inbound_sg_file: "{{ my_internal_inbound_security_groups_file }}",
         ec2_group_outbound_sg: "{{ my_outbound_security_groups }}"
       }

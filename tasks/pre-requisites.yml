@@ -10,9 +10,9 @@
   fail: msg="You must specify a list of inbound security groups to create, see README for more information"
   when: ec2_group_inbound_sg is undefined
 
-- name: "AWS | Security Groups | Check internal inbound security groups have been defined (ec2_group_internal_inbound_sg)"
-  fail: msg="You must specify a list of internal inbound security groups to create, see README for more information"
-  when: ec2_group_internal_inbound_sg is undefined
+- name: "AWS | Security Groups | Check internal inbound security groups have been defined (ec2_group_internal_inbound_sg_file)"
+  fail: msg="You must specify a file which lists internal inbound security groups to create, see README for more information"
+  when: ec2_group_internal_inbound_sg_file is undefined
 
 - name: "AWS | Security Groups | Check outbound security groups have been defined (ec2_group_outbound_sg)"
   fail: msg="You must specify a list of outbound security groups to create, see README for more information"
