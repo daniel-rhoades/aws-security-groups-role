@@ -5,7 +5,7 @@ aws-security-group-role
 
 Ansible role for simplifying the provisioning and decommissioning of EC2 Security Groups within an AWS account.
 
-For more detailed on information on the creating VPCs with Ansible see the offical documentation for that module: http://docs.ansible.com/ansible/ec2_group_module.html.
+For more detailed on information on the creating EC2 Security Groups with Ansible see the offical documentation for that module: http://docs.ansible.com/ansible/ec2_group_module.html.
 
 Requirements
 ------------
